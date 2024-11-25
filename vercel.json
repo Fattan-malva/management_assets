@@ -1,54 +1,56 @@
 {
     "version": 2,
     "builds": [
-      {
-        "src": "public/index.php",
-        "use": "@vercel/php"
-      }
+        {
+            "src": "public/index.php",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "public"
+            }
+        }
     ],
     "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "public/index.php"
-      }
+        {
+            "src": "/(.*)",
+            "dest": "public/index.php"
+        }
     ],
     "env": {
-      "APP_NAME": "Laravel",
-      "APP_ENV": "production",
-      "APP_KEY": "base64:NxZYsQeDEyw20sgKpqCz6mgyA9gdbvf30RjLgqTAa9o=",
-      "APP_DEBUG": "false",
-      "APP_URL": "https://your-vercel-app-url.vercel.app",  
-  
-      "DB_CONNECTION": "pgsql",
-      "DB_HOST": "aws-0-ap-southeast-1.pooler.supabase.com",
-      "DB_PORT": "6543",
-      "DB_DATABASE": "postgres",
-      "DB_USERNAME": "postgres.xjmbyrusmxizwfewybnh",
-      "DB_PASSWORD": "fattan-malva",
-      "DB_SSLMODE": "require",
-  
-      "MICROSOFT_CLIENT_ID": "2ea83694-e246-4eb0-a70b-9ec60a996041",
-      "MICROSOFT_CLIENT_SECRET": "tGp8Q~t2zJOncxl-JOnfz0CiZMFBCNhan4DPKav9",
-      "MICROSOFT_REDIRECT_URI": "https://your-vercel-app-url.vercel.app/auth/microsoft/callback",  
-      "MICROSOFT_TENANT_ID": "6a089cc3-eec0-4e26-bb42-86b3a74ce317",
-  
-      "BROADCAST_DRIVER": "pusher",
-      "CACHE_DRIVER": "file",
-      "FILESYSTEM_DISK": "local",
-      "QUEUE_CONNECTION": "sync",
-      "SESSION_DRIVER": "file",
-      "SESSION_LIFETIME": "120",
-  
-      "PUSHER_APP_ID": "1879643",
-      "PUSHER_APP_KEY": "4e48e575ba3df906eedf",
-      "PUSHER_APP_SECRET": "8969fadb902e36169f47",
-      "PUSHER_APP_CLUSTER": "ap1",
-  
-      "AWS_ACCESS_KEY_ID": "",
-      "AWS_SECRET_ACCESS_KEY": "",
-      "AWS_DEFAULT_REGION": "us-east-1",
-      "AWS_BUCKET": "",
-      "AWS_USE_PATH_STYLE_ENDPOINT": "false"
+        "APP_NAME": "Laravel",
+        "APP_ENV": "production",
+        "APP_KEY": "base64:NxZYsQeDEyw20sgKpqCz6mgyA9gdbvf30RjLgqTAa9o=",
+        "APP_DEBUG": "false",
+        "APP_URL": "https://your-vercel-app-url.vercel.app",
+
+        "DB_CONNECTION": "pgsql",
+        "DB_HOST": "aws-0-ap-southeast-1.pooler.supabase.com",
+        "DB_PORT": "6543",
+        "DB_DATABASE": "postgres",
+        "DB_USERNAME": "postgres.xjmbyrusmxizwfewybnh",
+        "DB_PASSWORD": "fattan-malva",
+        "DB_SSLMODE": "require",
+
+        "MICROSOFT_CLIENT_ID": "2ea83694-e246-4eb0-a70b-9ec60a996041",
+        "MICROSOFT_CLIENT_SECRET": "tGp8Q~t2zJOncxl-JOnfz0CiZMFBCNhan4DPKav9",
+        "MICROSOFT_REDIRECT_URI": "https://your-vercel-app-url.vercel.app/auth/microsoft/callback",
+        "MICROSOFT_TENANT_ID": "6a089cc3-eec0-4e26-bb42-86b3a74ce317",
+
+        "BROADCAST_DRIVER": "pusher",
+        "CACHE_DRIVER": "file",
+        "FILESYSTEM_DISK": "local",
+        "QUEUE_CONNECTION": "sync",
+        "SESSION_DRIVER": "file",
+        "SESSION_LIFETIME": "120",
+
+        "PUSHER_APP_ID": "1879643",
+        "PUSHER_APP_KEY": "4e48e575ba3df906eedf",
+        "PUSHER_APP_SECRET": "8969fadb902e36169f47",
+        "PUSHER_APP_CLUSTER": "ap1",
+
+        "AWS_ACCESS_KEY_ID": "",
+        "AWS_SECRET_ACCESS_KEY": "",
+        "AWS_DEFAULT_REGION": "us-east-1",
+        "AWS_BUCKET": "",
+        "AWS_USE_PATH_STYLE_ENDPOINT": "false"
     }
-  }
-  
+}

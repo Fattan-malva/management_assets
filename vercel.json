@@ -3,10 +3,13 @@
     "builds": [
         {
             "src": "public/index.php",
-            "use": "@vercel/static-build",
-            "config": {
-                "distDir": "public"
-            }
+            "use": "@vercel/php"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "public/index.php"
         }
     ],
     "env": {

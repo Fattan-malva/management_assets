@@ -105,72 +105,73 @@ class AssetsController extends Controller
     public function index()
     {
         $assetss = DB::table('assets')
-            ->join('merk', 'assets.merk', '=', 'merk.id')
-            ->leftJoin('customer', 'assets.name_holder', '=', 'customer.id')
-            ->leftJoin('depreciation', 'assets.code', '=', 'depreciation.asset_code')
-            ->select(
-                'assets.id',
-                'assets.code',
-                'assets.name_holder',
-                'assets.merk',
-                'assets.status',
-                'assets.serial_number',
-                'assets.asset_age',
-                'assets.category',
-                'assets.spesification',
-                'assets.next_maintenance',
-                'assets.condition',
-                'assets.entry_date',
-                'assets.scheduling_maintenance',
-                'assets.last_maintenance',
-                'assets.location',
-                'merk.name as merk_name',
-                'customer.name as customer_name',
-                DB::raw('
-                    COALESCE(
-                        (SELECT depreciation_price 
-                         FROM depreciation 
-                         WHERE depreciation.asset_code = assets.code 
-                         AND depreciation.date = CURDATE() 
-                         LIMIT 1), 
-                         
-                        (SELECT depreciation_price 
-                         FROM depreciation 
-                         WHERE depreciation.asset_code = assets.code 
-                         AND depreciation.date < CURDATE() 
-                         ORDER BY depreciation.date DESC 
-                         LIMIT 1),
-                         
-                        (SELECT depreciation_price 
-                         FROM depreciation 
-                         WHERE depreciation.asset_code = assets.code 
-                         AND depreciation.date > CURDATE() 
-                         ORDER BY depreciation.date ASC 
-                         LIMIT 1)
-                    ) as depreciation_price'
-                ),
-                DB::raw('MAX(depreciation.date) as depreciation_date')
-            )
-            ->groupBy(
-                'assets.id',
-                'assets.code',
-                'assets.name_holder',
-                'assets.merk',
-                'assets.status',
-                'assets.serial_number',
-                'assets.asset_age',
-                'assets.next_maintenance',
-                'assets.spesification',
-                'assets.condition',
-                'assets.category',
-                'assets.scheduling_maintenance',
-                'assets.last_maintenance',
-                'assets.entry_date',
-                'assets.location',
-                'merk.name',
-                'customer.name'
-            )
-            ->get();
+        ->join('merk', 'assets.merk', '=', 'merk.id')
+        ->leftJoin('customer', DB::raw('assets.name_holder::bigint'), '=', 'customer.id')
+        ->leftJoin('depreciation', 'assets.code', '=', 'depreciation.asset_code')
+        ->select(
+            'assets.id',
+            'assets.code',
+            'assets.name_holder',
+            'assets.merk',
+            'assets.status',
+            'assets.serial_number',
+            'assets.asset_age',
+            'assets.category',
+            'assets.spesification',
+            'assets.next_maintenance',
+            'assets.condition',
+            'assets.entry_date',
+            'assets.scheduling_maintenance',
+            'assets.last_maintenance',
+            'assets.location',
+            'merk.name as merk_name',
+            'customer.name as customer_name',
+            DB::raw('
+                COALESCE(
+                    (SELECT depreciation_price 
+                     FROM depreciation 
+                     WHERE depreciation.asset_code = assets.code 
+                     AND depreciation.date = CURRENT_DATE 
+                     LIMIT 1), 
+                     
+                    (SELECT depreciation_price 
+                     FROM depreciation 
+                     WHERE depreciation.asset_code = assets.code 
+                     AND depreciation.date < CURRENT_DATE 
+                     ORDER BY depreciation.date DESC 
+                     LIMIT 1),
+    
+                    (SELECT depreciation_price 
+                     FROM depreciation 
+                     WHERE depreciation.asset_code = assets.code 
+                     AND depreciation.date > CURRENT_DATE 
+                     ORDER BY depreciation.date ASC 
+                     LIMIT 1)
+                ) as depreciation_price'
+            ),
+            DB::raw('MAX(depreciation.date) as depreciation_date')
+        )
+        ->groupBy(
+            'assets.id',
+            'assets.code',
+            'assets.name_holder',
+            'assets.merk',
+            'assets.status',
+            'assets.serial_number',
+            'assets.asset_age',
+            'assets.next_maintenance',
+            'assets.spesification',
+            'assets.condition',
+            'assets.category',
+            'assets.scheduling_maintenance',
+            'assets.last_maintenance',
+            'assets.entry_date',
+            'assets.location',
+            'merk.name',
+            'customer.name'
+        )
+        ->get();
+    
 
         // Add calculated time remaining in seconds for JavaScript
         $assetss = $assetss->map(function ($asset) {

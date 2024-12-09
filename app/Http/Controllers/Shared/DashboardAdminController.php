@@ -61,7 +61,7 @@ class DashboardAdminController extends Controller
                 'a.category_asset as asset_name',
                 'm.name as merk_name',
                 'a.location as location',
-                DB::raw("SUM(CASE WHEN a.status = 'Inventory' THEN 1 ELSE 0 END) as assets_count")
+                DB::raw('SUM(CASE WHEN a.status = "Inventory" THEN 1 ELSE 0 END) as assets_count')
             )
             ->where(function ($query) {
                 $query->where('a.approval_status', '<>', 'Approved')
@@ -112,14 +112,14 @@ class DashboardAdminController extends Controller
             ->where('status', 'Inventory')
             ->get(); // Ensure this returns results
 
-            $operationSummaryData = DB::table('transactions as a')
+        $operationSummaryData = DB::table('transactions as a')
             ->join('assets as i', 'a.asset_code', '=', 'i.id')
             ->join('merk as m', 'a.merk', '=', 'm.id')
             ->select(
                 'a.location',
                 'a.category_asset',
                 'm.name AS merk',
-                DB::raw("string_agg(i.code, ', ' ORDER BY i.code ASC) AS asset_tagging"),
+                DB::raw('GROUP_CONCAT(i.code ORDER BY i.code ASC SEPARATOR ", ") AS asset_tagging'), // Pakai separator koma
                 DB::raw('COUNT(a.id) AS total_transactions')
             )
             ->where('a.approval_status', 'Approved')
@@ -128,7 +128,6 @@ class DashboardAdminController extends Controller
             ->orderBy('a.category_asset')
             ->orderBy('m.name')
             ->get();
-        
 
         // Additional query to display asset quantities by location and type
         $data = DB::table('transactions')

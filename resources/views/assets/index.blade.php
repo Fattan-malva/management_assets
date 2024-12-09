@@ -681,7 +681,7 @@ body.dark-mode .table th {
         padding: 5px 10px;
         display: inline-block;
         white-space: nowrap; /* Prevents text wrapping */
-    }
+    } 
 
     /* Table styling for smaller devices */
     @media (max-width: 768px) {
